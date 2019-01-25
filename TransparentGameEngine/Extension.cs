@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Drawing;
 
 namespace TransparentGameEngine
@@ -13,16 +12,27 @@ namespace TransparentGameEngine
 
         public static float Lerp(float firstFloat, float secondFloat, float by)
         {
-            return firstFloat + (secondFloat - firstFloat) * by;
+            return (float)Lerp((double)firstFloat, (double)secondFloat, (double)by);
+        }
+
+        public static double Lerp(double firstFloat, double secondFloat, double by)
+        {
+            var m1Float = Math.Abs(firstFloat);
+            var m2Float = Math.Abs(secondFloat);
+
+            var difference = m1Float > m2Float ? m1Float - m2Float : m2Float - m1Float;
+
+            var toRet = difference - difference * by;
+            return firstFloat + toRet*(firstFloat<secondFloat?1:-1);
         }
 
         public static Point Lerp(Point firstVector, Point secondVector, float by)
         {
-            float retX = Lerp(firstVector.X, secondVector.X, by);
-            float retY = Lerp(firstVector.Y, secondVector.Y, by);
-            return new Point((int)retX, (int)retY);
+            var retX = Lerp(firstVector.X, secondVector.X, by);
+            var retY = Lerp(firstVector.Y, secondVector.Y, by);
+            return new Point((int)Math.Round(retX), (int)Math.Round(retY));
         }
 
-        public static IntPtr GetHandle()=> Process.GetCurrentProcess().MainWindowHandle;
+        public static Vector2 ToVector2(this Point point)=>new Vector2(point.X, point.Y);
     }
 }

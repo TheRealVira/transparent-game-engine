@@ -10,7 +10,6 @@ namespace TransparentGameEngine
         private TransparentGameComponent _aGameComponent;
         private DateTime _lastTimeStamp;
         private readonly Timer _timer;
-        private Thread _myThread;
         private IWin32Window _owner;
 
         public TransparentGameComponent GetGameComponent() => _aGameComponent;
@@ -36,16 +35,10 @@ namespace TransparentGameEngine
         private void Game_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             Pause();
-            _myThread?.Abort();
         }
         
         public void Run()
         {
-            if (_myThread!=null&&_myThread.IsAlive)
-            {
-                _myThread.Abort();
-            }
-
             this.KickStart(_owner);
             Resume();
         }

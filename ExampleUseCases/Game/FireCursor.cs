@@ -19,7 +19,7 @@ namespace ExampleUseCases.Game
 
         public override void Update(TimeSpan elapsedTimeSpan)
         {
-            LastFirePosition = Extension.Lerp(LastFirePosition, MousePosition, .2f);
+            LastFirePosition = Extension.Lerp(LastFirePosition, MousePosition, .8f);
             ImageAnimator.UpdateFrames(FireImage);
         }
 

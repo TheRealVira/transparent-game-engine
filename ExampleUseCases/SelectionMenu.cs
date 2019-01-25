@@ -26,14 +26,15 @@ namespace ExampleUseCases
                 listBox1.Items.Add(type1);
             }
 
-            MyGameComponent = new TransparentGameEngine.Game(TransparentGameComponent.Generate((Type)listBox1.Items[0]), new Win32Window(Handle));
+            MyGameComponent = new TransparentGameEngine.Game(TransparentGameComponent.Generate((Type)listBox1.Items[2]), new Win32Window(Handle));
             
             MyGameComponent.Run();
         }
 
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            MyGameComponent.LoadGameComponent(TransparentGameComponent.Generate((Type) listBox1.SelectedItem));
+            if(listBox1.SelectedItem!=null)
+                MyGameComponent.LoadGameComponent(TransparentGameComponent.Generate((Type) listBox1.SelectedItem));
         }
     }
 }
