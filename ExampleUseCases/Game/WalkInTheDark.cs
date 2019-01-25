@@ -1,25 +1,31 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Input;
+using System.Windows.Media.Media3D;
 using TransparentGameEngine;
 
 namespace ExampleUseCases.Game
 {
     class WalkInTheDark:TransparentGameComponent
     {
-        private new const int Size = 100;
-        private readonly Image _lightimage;
+        private const int Size = 200;
+        private Image Lightimage;
 
         public WalkInTheDark()
         {
             BackColor = Color.Black;
-            _lightimage = Image.FromFile("./Content/Light.png");
+            Lightimage = Image.FromFile("./Content/Light.png");
             
             float[][] colorMatrixElements = {
-                new [] { TransparentGameComponent.TransparancyKey.R / 255.0f, 0, 0, 0, 0 },
-                new [] { 0, TransparentGameComponent.TransparancyKey.G / 255.0f, 0, 0, 0 },
-                new [] { 0, 0, TransparentGameComponent.TransparancyKey.B / 255.0f, 0, 0 },
-                new float[] { 0, 0, 0, TransparentGameComponent.TransparancyKey.A, 0 },
+                new float[] { TransparentGameComponent.TransparancyKey.R / 255.0f, 0, 0, 0, 0 },
+                new float[] { 0, TransparentGameComponent.TransparancyKey.G / 255.0f, 0, 0, 0 },
+                new float[] { 0, 0, TransparentGameComponent.TransparancyKey.B / 255.0f, 0, 0 },
+                new float[] { 0, 0, 0, 1, 0 },
                 new float[] { 0, 0, 0, 0, 1 }
             };
 
@@ -27,16 +33,16 @@ namespace ExampleUseCases.Game
             
             // Set the new color matrix
             var iaPicture = new System.Drawing.Imaging.ImageAttributes();
-            var bmpPicture = new Bitmap(_lightimage.Width, _lightimage.Height);
+            var bmpPicture = new Bitmap(Lightimage.Width, Lightimage.Height);
             iaPicture.SetColorMatrix(cmPicture);
             // Set the Graphics object from the bitmap
             var gfxPicture = Graphics.FromImage(bmpPicture);
             // New rectangle for the picture, same size as the original picture
-            var rctPicture = new Rectangle(0, 0, _lightimage.Width, _lightimage.Height);
+            var rctPicture = new Rectangle(0, 0, Lightimage.Width, Lightimage.Height);
             // Draw the new image
-            gfxPicture.DrawImage(_lightimage, rctPicture, 0, 0, _lightimage.Width, _lightimage.Height, GraphicsUnit.Pixel, iaPicture);
+            gfxPicture.DrawImage(Lightimage, rctPicture, 0, 0, Lightimage.Width, Lightimage.Height, GraphicsUnit.Pixel, iaPicture);
             // Set the PictureBox to the new inverted colors bitmap
-            _lightimage = bmpPicture;
+            Lightimage = bmpPicture;
         }
 
         public override void Update(TimeSpan elapsedTimeSpan)
@@ -46,7 +52,7 @@ namespace ExampleUseCases.Game
 
         public override void Draw(object sender, PaintEventArgs e)
         {
-            e.Graphics.DrawImage(_lightimage, new Point[]
+            e.Graphics.DrawImage(Lightimage, new Point[]
             {
                 new Point(MousePosition.X-Size/2, MousePosition.Y-Size/2), 
                 new Point(MousePosition.X+Size/2, MousePosition.Y-Size/2), 
