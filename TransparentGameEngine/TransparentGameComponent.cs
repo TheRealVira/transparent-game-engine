@@ -7,6 +7,8 @@ namespace TransparentGameEngine
 {
     public abstract class TransparentGameComponent : Form
     {
+        public static Color TransparancyKey = Color.LightGreen;
+
         protected TransparentGameComponent()
         {
             TopMost = true;
@@ -15,8 +17,8 @@ namespace TransparentGameEngine
             Application.EnableVisualStyles();
             FormBorderStyle = FormBorderStyle.None;
             WindowState = FormWindowState.Maximized;
-            BackColor = Color.LightGreen;
-            TransparencyKey = Color.LightGreen;
+            BackColor = TransparancyKey;
+            TransparencyKey = TransparancyKey;
 
             Paint += Draw;
         }
