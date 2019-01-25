@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Linq;
-using System.Reflection;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using ExampleUseCases.Game;
 using TransparentGameEngine;
 
 namespace ExampleUseCases
@@ -26,7 +23,7 @@ namespace ExampleUseCases
                 listBox1.Items.Add(type1);
             }
 
-            MyGameComponent = new TransparentGameEngine.Game(TransparentGameComponent.Generate((Type)listBox1.Items[2]), new Win32Window(Handle));
+            MyGameComponent = new TransparentGameEngine.Game(TransparentGameComponent.Generate((Type)listBox1.Items[0]), new Win32Window(Handle));
             
             MyGameComponent.Run();
         }
